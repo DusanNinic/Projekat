@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://openlayers.org/en/v4.6.5/css/ol.css"
+      type="text/css"
+    />
+
+    <!-- The line below is only needed for old environments like Internet Explorer and Android 4.x -->
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
+    <script src="https://openlayers.org/en/v4.6.5/build/ol.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+    />
+    <script src="main.js"></script>
+    <title>Nacionalni Parkovi Srbije</title>
+  </head>
+  <body>
+    <div class="head_title">
+      <h1>Nacionalni Parkovi Srbije</h1>
+    </div>
+    <div class="filer_box">
+      <p>
+        Na teritoriji Republike Srbije se nalazi 5 nacionalnih parkova:
+        Nacionalni park Fruška Gora, Nacionalni park Đerdap, Nacionalni park
+        Tara, Nacionalni park Kopaonik, Nacionalni park Stara Planina U
+        prirodnoj baštini svake zemlje nacionalni parkovi zauzimaju posebno
+        mesto. To su područja od izuzetnog prirodnog, ali i kulturno-istorijskog
+        značaja. Oni podrazumevaju jedan od najviših oblika zaštite životne
+        sredine. Svojim ukupnim vrednostima danas nacionalni parkovi nadilaze
+        granice Srbije i uključeni su u Evropsku federaciju nacionalnih parkova
+        - EUROPARC. Na karti dole su prikazani satelitski snimci tri nacionalna
+        parka a to su Fruška gora, Tara i Stara Planina
+      </p>
+    </div>
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+    <div id="map" class="map"></div>
+    <script>
+      var layers = [
+        new ol.layer.Tile({
+          source: new ol.source.OSM(),
+        }),
+        new ol.layer.Tile({
+          source: new ol.source.TileWMS({
+            url: "http://localhost:8080/geoserver/Ws_Test/wms",
+            params: { 'LAYERS': "Ws_Test:SRB_adm0", 'TILED': true },
+            serverType: "geoserver",
+            transition: 0,
+            projection: "4326",
+          }),
+        }),
+        new ol.layer.Tile({
+          source: new ol.source.TileWMS({
+            url: "http://localhost:8080/geoserver/Ws_Test/wms",
+            params: { 'LAYERS': "Ws_Test:Soar-Sentinel2_TRUE_COLOR_2023-02-23", 'TILED': true },
+            serverType: "geoserver",
+            transition: 0,
+           
+          }),
+        }),
+        new ol.layer.Tile({
+          source: new ol.source.TileWMS({
+            url: "http://localhost:8080/geoserver/Ws_Test/wms",
+            params: { 'LAYERS': "Ws_Test:Soar-Sentinel2_TRUE_COLOR_2023-03-20", 'TILED': true },
+            serverType: "geoserver",
+            transition: 0,
+           
+          }),
+        }),
+        new ol.layer.Tile({
+          source: new ol.source.TileWMS({
+            url: "http://localhost:8080/geoserver/Ws_Test/wms",
+            params: { 'LAYERS': "	Ws_Test:Soar-Sentinel2_TRUE_COLOR_2023-03-24", 'TILED': true },
+            serverType: "geoserver",
+            transition: 0,
+           
+          }),
+        }),
+      ];
+      var map = new ol.Map({
+        layers: layers,
+        target: "map",
+        view: new ol.View({
+          center: ol.proj.fromLonLat([20.91907, 43.81947]),
+          zoom: 6,
+        }),
+      });
+    </script>
+    <div class="forma">
+      <form>
+        <label for="Ime">Ime</label>
+        <input type="text" id="Ime" name="ime" placeholder="Vaše ime..." />
+
+        <label for="Prezime">Prezime</label>
+        <input
+          type="text"
+          id="Prezime"
+          name="prezime"
+          placeholder="Vaše prezime..."
+        />
+
+        <label for="Poruka">Poruka</label>
+        <textarea
+          id="poruka"
+          name="porukaa"
+          placeholder="Ostavite sugestiju"
+        ></textarea>
+
+        <button type="submit">Pošalji</button>
+      </form>
+    </div>
+    <footer>
+      <div class="bot_cont">
+        <p class="text">Novi Sad,Serbia Tel:063xxxxxx Mail:mock@mail.com</p>
+        <a
+          class="text"
+          id="link_name"
+          href="https://www.facebook.com/dusan.ninic.1"
+          target="_blank"
+        >
+          Dušan Ninić</a
+        >
+      </div>
+    </footer>
+  </body>
+</html>
